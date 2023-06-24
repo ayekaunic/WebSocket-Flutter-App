@@ -11,6 +11,7 @@ wss.on('connection', (ws) => {
   // handle incoming messages from the client
   ws.on('message', (message) => {
     console.log(`Received message: ${message}`);
+    ws.send(message.toString());
   });
   
   // handle client disconnection
