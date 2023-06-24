@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
                     case ConnectionState.active:
                       if (snapshot.hasData) {
                         final message = snapshot.data.toString();
-                        return Text('Server: $message');
+                        return Text('WebSocket Server: $message');
                       }
                       return const Text('No data received yet.');
                     case ConnectionState.done:
