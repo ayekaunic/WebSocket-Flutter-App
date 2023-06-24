@@ -39,23 +39,21 @@ class MyApp extends StatelessWidget {
                 stream: _channel.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return SelectableText('Error: ${snapshot.error}');
-                  } else {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                        return const SelectableText('Not connected.');
-                      case ConnectionState.waiting:
-                        return const SelectableText(
-                            'Waiting for connection...');
-                      case ConnectionState.active:
-                        if (snapshot.hasData) {
-                          final message = snapshot.data.toString();
-                          return SelectableText('Server received: $message');
-                        }
-                        return const Text('No data received yet.');
-                      case ConnectionState.done:
-                        return const SelectableText('Connection closed.');
-                    }
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                      return const Text('Not connected.');
+                    case ConnectionState.waiting:
+                      return const Text('Waiting for connection...');
+                    case ConnectionState.active:
+                      if (snapshot.hasData) {
+                        final message = snapshot.data.toString();
+                        return Text('WebSocket Server: $message');
+                      }
+                      return const Text('No data received yet.');
+                    case ConnectionState.done:
+                      return const Text('Connection closed.');
                   }
                 },
               ),
