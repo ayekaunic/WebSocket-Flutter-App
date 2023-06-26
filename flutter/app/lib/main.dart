@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:web_socket_channel/io.dart';
 
-final _channel = IOWebSocketChannel.connect('ws://192.168.1.2:8080');
+var _channel = IOWebSocketChannel.connect('ws://192.168.1.7:8080');
 TextEditingController _controller = TextEditingController();
 
 // method to send data to the server
 void _sendMessage() {
   if (_controller.text.isNotEmpty) {
     _channel.sink.add(_controller.text);
+    _controller.text = '';
   }
 }
 
@@ -18,10 +20,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.immersiveSticky,
+    );
     return MaterialApp(
       title: 'WebSocket Demo',
       home: Scaffold(
-        appBar: AppBar(title: const Text('WebSocket Demo')),
+        appBar: AppBar(title: const Text('WebSocket Server')),
         body: Padding(
           padding: const EdgeInsets.all(23),
           child: Column(
@@ -38,7 +43,7 @@ class MyApp extends StatelessWidget {
                 stream: _channel.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
+                    return SelectableText('Error:\n${snapshot.error}');
                   }
                   switch (snapshot.connectionState) {
                     case ConnectionState.none:
