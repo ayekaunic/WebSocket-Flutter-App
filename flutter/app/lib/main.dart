@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 
-final _channel = IOWebSocketChannel.connect('ws://172.15.66.139:8080');
+final _channel = IOWebSocketChannel.connect('ws://192.168.1.2:8080');
 TextEditingController _controller = TextEditingController();
 
 // method to send data to the server
 void _sendMessage() {
   if (_controller.text.isNotEmpty) {
     _channel.sink.add(_controller.text);
-    _controller.text = '';
   }
 }
 
@@ -30,8 +29,8 @@ class MyApp extends StatelessWidget {
               Form(
                 child: TextFormField(
                   controller: _controller,
-                  decoration: const InputDecoration(
-                      labelText: 'Send a message to the server'),
+                  decoration:
+                      const InputDecoration(labelText: 'Send a message'),
                 ),
               ),
               const SizedBox(height: 23),
@@ -49,7 +48,7 @@ class MyApp extends StatelessWidget {
                     case ConnectionState.active:
                       if (snapshot.hasData) {
                         final message = snapshot.data.toString();
-                        return Text('WebSocket Server: $message');
+                        return Text('Server: $message');
                       }
                       return const Text('No data received yet.');
                     case ConnectionState.done:
