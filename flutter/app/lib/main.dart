@@ -1,3 +1,4 @@
+import 'package:app/notification_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:web_socket_channel/io.dart';
@@ -53,6 +54,11 @@ class MyApp extends StatelessWidget {
                     case ConnectionState.active:
                       if (snapshot.hasData) {
                         final message = snapshot.data.toString();
+                        NotificationApi.showNotification(
+                          title: 'Server',
+                          body: message,
+                          payload: 'none',
+                        );
                         return Text('Server: $message');
                       }
                       return const Text('No data received yet.');
