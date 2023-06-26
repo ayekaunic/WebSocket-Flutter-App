@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 
-final _channel = IOWebSocketChannel.connect('ws://192.168.1.3:8080');
+final _channel = IOWebSocketChannel.connect('ws://172.15.66.139:8080');
 TextEditingController _controller = TextEditingController();
 
 // method to send data to the server
