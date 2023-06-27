@@ -4,7 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:web_socket_channel/io.dart';
 
 // Creating a WebSocket channel to connect to the server
-var _webSocketChannel = IOWebSocketChannel.connect('ws://192.168.1.3:8080');
+var _webSocketChannel = IOWebSocketChannel.connect('ws://192.168.1.5:8080');
 
 // Controller for the input text field
 TextEditingController _controller = TextEditingController();
@@ -93,10 +93,12 @@ class MyApp extends StatelessWidget {
                             body: '',
                           );
                         } else {
-                          _showNotification(
-                            title: 'Server',
-                            body: message,
-                          );
+                          Future.delayed(const Duration(seconds: 5), () {
+                            _showNotification(
+                              title: 'Server',
+                              body: message,
+                            );
+                          });
                         }
                         return Text('Server: $message');
                       }
