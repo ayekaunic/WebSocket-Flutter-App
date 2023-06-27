@@ -8,10 +8,15 @@ wss.on('connection', (ws) => {
   // send hello message to client
   ws.send('Hello, client!');
   
-  // handle incoming messages from client and send em back
+  // handle incoming messages from client
   ws.on('message', (message) => {
     console.log(`Received message: ${message}`);
-    ws.send(message.toString());
+
+    if (message.toString()=='/time') {
+      ws.send(new Date().toLocaleTimeString());
+    } else {
+      ws.send(message.toString());
+    }
   });
   
   // handle client disconnection

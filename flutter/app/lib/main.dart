@@ -4,7 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:web_socket_channel/io.dart';
 
 // Creating a WebSocket channel to connect to the server
-var _webSocketChannel = IOWebSocketChannel.connect('ws://192.168.1.7:8080');
+var _webSocketChannel = IOWebSocketChannel.connect('ws://192.168.1.3:8080');
 
 // Controller for the input text field
 TextEditingController _controller = TextEditingController();
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
     );
 
     return MaterialApp(
-      title: 'WebSocket Demo',
+      title: 'WebSocket Flutter Demo',
       home: Scaffold(
         appBar: AppBar(title: const Text('WebSocket Server')),
         body: Padding(
@@ -71,6 +71,11 @@ class MyApp extends StatelessWidget {
                 stream: _webSocketChannel.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
+                    // Show a push notification when error returned while trying to connect to server
+                    _showNotification(
+                      title: 'Error!',
+                      body: "Couldn't connect to server.",
+                    );
                     return SelectableText('Error:\n${snapshot.error}');
                   }
                   switch (snapshot.connectionState) {
@@ -82,14 +87,26 @@ class MyApp extends StatelessWidget {
                       if (snapshot.hasData) {
                         final message = snapshot.data.toString();
                         // Show a push notification when a message is received
-                        _showNotification(
-                          title: 'Server',
-                          body: message,
-                        );
+                        if (message == "Hello, client!") {
+                          _showNotification(
+                            title: 'Server connected!',
+                            body: '',
+                          );
+                        } else {
+                          _showNotification(
+                            title: 'Server',
+                            body: message,
+                          );
+                        }
                         return Text('Server: $message');
                       }
                       return const Text('No data received yet.');
                     case ConnectionState.done:
+                      // Show a push notification when connection is closed
+                      _showNotification(
+                        title: 'Connection closed.',
+                        body: '',
+                      );
                       return const Text('Connection closed.');
                   }
                 },
@@ -114,6 +131,7 @@ class MyApp extends StatelessWidget {
       'channel_name',
       channelDescription: 'description',
       importance: Importance.max,
+      priority: Priority.max,
     );
 
     const NotificationDetails platformChannelSpecifics =
