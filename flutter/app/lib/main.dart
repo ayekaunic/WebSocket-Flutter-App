@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.teal,
-        primarySwatch: Colors.teal,
+        primaryColor: Colors.deepPurple,
+        primarySwatch: Colors.deepPurple,
         appBarTheme: const AppBarTheme(
           systemOverlayStyle:
               SystemUiOverlayStyle(statusBarColor: Colors.transparent),

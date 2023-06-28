@@ -2,6 +2,7 @@ import 'package:app/screens/websocket.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 
+TextEditingController _nameController = TextEditingController();
 TextEditingController _serverController = TextEditingController();
 
 class Connect extends StatelessWidget {
@@ -20,9 +21,18 @@ class Connect extends StatelessWidget {
             const SizedBox(height: 23),
             Form(
               child: TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Username',
+                ),
+              ),
+            ),
+            const SizedBox(height: 23),
+            Form(
+              child: TextFormField(
                 controller: _serverController,
                 decoration: const InputDecoration(
-                  labelText: 'Enter the server URL',
+                  labelText: 'Server URL',
                 ),
               ),
             ),
@@ -41,13 +51,16 @@ class Connect extends StatelessWidget {
 
   void _connectToServer(BuildContext context) {
     final serverUrl = _serverController.text;
+    final username = _nameController.text;
     if (serverUrl.isNotEmpty) {
       final webSocketChannel = IOWebSocketChannel.connect(serverUrl);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              WebSocketScreen(webSocketChannel: webSocketChannel),
+          builder: (context) => WebSocketScreen(
+            webSocketChannel: webSocketChannel,
+            username: username,
+          ),
         ),
       );
     }

@@ -19,7 +19,9 @@ const InitializationSettings initializationSettings =
 // ignore: must_be_immutable
 class WebSocketScreen extends StatelessWidget {
   final IOWebSocketChannel webSocketChannel;
-  WebSocketScreen({super.key, required this.webSocketChannel});
+  final String username;
+  WebSocketScreen(
+      {super.key, required this.webSocketChannel, required this.username});
 
   // Method to send data to the server
   void _sendMessage(WebSocketChannel webSocketChannel) {
@@ -73,13 +75,14 @@ class WebSocketScreen extends StatelessWidget {
                       return const Text('Waiting for connection...');
                     case ConnectionState.active:
                       if (snapshot.hasData) {
-                        final message = snapshot.data.toString();
+                        String message = snapshot.data.toString();
                         // Show a push notification when a message is received
                         if (message == "Hello, client!") {
                           _showNotification(
                             title: 'Server connected!',
-                            body: '',
+                            body: 'Hello, $username!',
                           );
+                          message = "Hello, $username!";
                         } else if (_five) {
                           Future.delayed(const Duration(seconds: 5), () {
                             _showNotification(
@@ -116,7 +119,6 @@ class WebSocketScreen extends StatelessWidget {
               margin: const EdgeInsets.all(10),
               child: FloatingActionButton(
                 tooltip: "Instant",
-                backgroundColor: Colors.deepPurpleAccent,
                 onPressed: () {
                   _five = false;
                   _sendMessage(webSocketChannel);
@@ -129,7 +131,6 @@ class WebSocketScreen extends StatelessWidget {
               margin: const EdgeInsets.all(10),
               child: FloatingActionButton(
                 tooltip: "5 seconds",
-                backgroundColor: Colors.deepOrangeAccent,
                 onPressed: () {
                   _five = true;
                   _sendMessage(webSocketChannel);
