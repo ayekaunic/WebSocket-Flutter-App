@@ -48,7 +48,6 @@ class WebSocketScreen extends StatelessWidget {
           padding: const EdgeInsets.all(23),
           child: Column(
             children: [
-              const SizedBox(height: 23),
               Form(
                 child: TextFormField(
                   controller: _controller,
