@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  // Ensure that Flutter initializes the necessary bindings
   WidgetsFlutterBinding.ensureInitialized();
-  // Run the app
   runApp(const MyApp());
 }
 
@@ -14,9 +12,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setEnabledSystemUIMode(
-    //   SystemUiMode.immersiveSticky,
-    // );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
