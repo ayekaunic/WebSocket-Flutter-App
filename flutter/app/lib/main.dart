@@ -14,12 +14,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.immersiveSticky,
-    );
-    return const MaterialApp(
-      title: 'WebSocket Flutter Demo',
-      home: Connect(),
+    // SystemChrome.setEnabledSystemUIMode(
+    //   SystemUiMode.immersiveSticky,
+    // );
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Colors.teal,
+        primarySwatch: Colors.teal,
+        appBarTheme: const AppBarTheme(
+          systemOverlayStyle:
+              SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+        ),
+      ),
+      title: 'WebSockets',
+      home: const Connect(),
     );
   }
 }
